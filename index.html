@@ -3,287 +3,417 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patricia S. Diaz | Registered Nurse</title>
+<title>Patricia S. Diaz | RN Portfolio</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* GLOBAL */
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Poppins',sans-serif;
-  color:#444;
+  font-family:'Inter',sans-serif;
+  color:#333;
+  background:#f9fbff;
   overflow-x:hidden;
-  background: linear-gradient(-45deg,#ffe6f2,#e6f7ff,#fff0f5,#e0f7fa);
-  background-size:400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-@keyframes gradientBG{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
 }
 
-/* Loading */
-#loadingScreen{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:#fff;
-  display:flex;justify-content:center;align-items:center;
-  font-size:2rem;color:#ff69b4;
-  z-index:1000;
-  animation:pulse 1.5s infinite;
-  transition:1s;
+/* Loading Screen */
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #f9fbff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  color: #4da6ff;
+  z-index: 1000;
+  animation: shimmer 1.5s infinite;
+  opacity: 1;
+  transition: opacity 1s ease;
 }
-@keyframes pulse{
-  0%{opacity:0.4;}
-  50%{opacity:1;}
-  100%{opacity:0.4;}
-}
-
-/* Floating Medical Icons */
-.icon{
-  position:fixed;
-  font-size:22px;
-  opacity:0.15;
-  animation:floatIcon 20s linear infinite;
-}
-@keyframes floatIcon{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-10vh);}
+@keyframes shimmer {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
 }
 
-/* Canvas */
-#threeCanvas{
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  z-index:-1;
-}
+/* Particle Background */
+#threeCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
-/* Header */
+/* HEADER */
 header{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
   text-align:center;
-  animation:floatHeader 4s ease-in-out infinite;
+  padding:100px 20px;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  transition:0.5s;
 }
-@keyframes floatHeader{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-8px);}
-}
-
+header.hidden{display:none;}
 header h1{
-  font-family:'Quicksand',sans-serif;
+  font-family:'Orbitron',sans-serif;
   font-size:3rem;
-  color:#ff4da6;
+  background: linear-gradient(270deg, #4da6ff, #66ccff, #4da6ff);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 5s ease infinite;
 }
-
-header p{
-  color:#4da6ff;
-  margin-top:10px;
-  font-size:1.2rem;
+@keyframes gradientShift{
+  0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}
 }
-
+header p{font-size:1.2rem;margin-top:15px;color:#6b8ee3;}
 .btn{
-  margin-top:25px;
-  padding:14px 35px;
-  border-radius:30px;
+  padding:12px 28px;
+  background:#4da6ff;
+  color:white;
   border:none;
+  border-radius:5px;
   cursor:pointer;
   font-weight:600;
-  background:linear-gradient(45deg,#ff99cc,#66ccff);
-  color:white;
-  box-shadow:0 5px 20px rgba(255,105,180,0.4);
-  transition:0.4s;
+  transition:0.3s;
+  margin-top:20px;
 }
-.btn:hover{
-  transform:translateY(-4px) scale(1.05);
-  box-shadow:0 10px 30px rgba(255,105,180,0.6);
-}
+.btn:hover{background:#66ccff;}
 
 /* Sections */
 section{
+  padding:50px 20px;
   max-width:900px;
-  margin:50px auto;
-  padding:40px;
-  border-radius:25px;
-  backdrop-filter:blur(15px);
-  background:rgba(255,255,255,0.7);
-  box-shadow:0 8px 32px rgba(255,105,180,0.2);
+  margin:40px auto;
+  background:rgba(255,255,255,0.9);
+  border-radius:12px;
+  box-shadow:0 0 30px rgba(77,166,255,0.3);
   opacity:0;
-  transform:translateY(50px);
-  transition:1s;
+  transform:translateY(40px);
+  transition:0.8s;
   display:none;
 }
+section.visible{opacity:1;transform:translateY(0);display:block;}
+h2{margin-bottom:20px;color:#4da6ff;font-family:'Orbitron',sans-serif;}
 
-section.visible{
-  opacity:1;
-  transform:translateY(0);
-  display:block;
+/* Divider */
+.med-divider{
+  width:100%;
+  height:40px;
+  position:relative;
+  overflow:hidden;
+  margin:20px 0;
 }
-
-h2{
-  margin-bottom:20px;
-  font-family:'Quicksand',sans-serif;
-  color:#ff4da6;
+.med-divider::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:0;
+  width:100%;
+  height:2px;
+  background:#cce6ff;
 }
-
-/* Cards */
-.card{
+.med-divider::after{
+  content:"✚";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
   background:white;
+  padding:0 15px;
+  color:#4da6ff;
+  font-size:18px;
+}
+
+/* Experience Cards */
+.card{
+  margin-bottom:15px;
   padding:20px;
-  margin-bottom:20px;
-  border-radius:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.05);
-  transition:0.4s;
+  border-left:4px solid #4da6ff;
+  background: rgba(77,166,255,0.05);
+  border-radius:8px;
+  backdrop-filter: blur(5px);
+  transition:0.3s;
+  box-shadow:0 0 10px rgba(77,166,255,0.1);
+  transform-style: preserve-3d;
 }
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 12px 25px rgba(255,105,180,0.3);
+  box-shadow:0 0 30px #4da6ff, 0 0 50px rgba(77,166,255,0.3);
+  transform: rotateY(5deg) rotateX(5deg) translateY(-5px);
 }
-.card h3{color:#ff4da6;}
-.card span{color:#4da6ff;font-size:0.9rem;}
+.card h3{margin-bottom:5px;color:#4da6ff;}
+.card span{font-size:0.9rem;color:#6b8ee3;}
+ul{list-style:none;margin-top:10px;}
+li{margin-bottom:10px;}
 
-/* Heartbeat Line */
-.heartbeat{
-  width:100%;
-  height:60px;
-  background: url('https://i.imgur.com/9a6h6Yp.png') repeat-x;
-  background-size:contain;
-  animation:moveHeart 5s linear infinite;
-  opacity:0.3;
-}
-@keyframes moveHeart{
-  from{background-position-x:0;}
-  to{background-position-x:1000px;}
-}
+/* Social Links */
+.social-links {display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 15px;}
+.social-btn {padding: 12px 24px; background: transparent; border: 2px solid #4da6ff; color: #4da6ff; font-weight: 600; border-radius: 8px; transition: 0.4s; text-decoration: none; font-family: 'Orbitron', sans-serif;}
+.social-btn:hover {background: #4da6ff; color: #fff; box-shadow: 0 0 20px #4da6ff, 0 0 40px rgba(77,166,255,0.5); transform: translateY(-3px);}
+
+/* Contact Button Fade Up */
+#contactBtn{opacity:0; transform:translateY(20px); transition: 0.8s;}
+#contactBtn.visible{opacity:1; transform:translateY(0);}
 
 /* Cursor trail */
-.trail{
-  position:fixed;
-  width:8px;height:8px;
-  background:#ff99cc;
-  border-radius:50%;
-  pointer-events:none;
-  opacity:0.6;
-  transform:translate(-50%,-50%);
+.trail{position: fixed;width: 10px;height: 10px;background: #4da6ff;border-radius: 50%;pointer-events: none;opacity: 0.5;transform: translate(-50%, -50%);mix-blend-mode: lighten;}
+
+/* Skills Section */
+.skill{margin-bottom:20px;}
+.skill-bar{
+  width:100%;
+  height:12px;
+  background:#e6f2ff;
+  border-radius:20px;
+  overflow:hidden;
+}
+.skill-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#4da6ff,#66ccff);
+  border-radius:20px;
+  transition:2s;
 }
 
-/* Responsive */
-@media(max-width:600px){
-  header h1{font-size:2rem;}
-  section{padding:25px;}
+/* License Card */
+.license-card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  margin-top:20px;
+  border-left:6px solid #4da6ff;
 }
+.license-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+.license-header h3{color:#4da6ff;}
+.status{font-weight:600;font-size:14px;}
+.status.active{color:#16a34a;}
+.license-details p{margin-bottom:8px;font-size:15px;}
+
+/* Mobile */
+@media(max-width:600px){header h1{font-size:2rem;} header p{font-size:1rem;}}
 </style>
 </head>
 <body>
 
-<div id="loadingScreen">Preparing Nurse Portfolio...</div>
+<!-- Loading Screen -->
+<div id="loadingScreen">Loading Portfolio...</div>
+
+<!-- Particle Background -->
 <canvas id="threeCanvas"></canvas>
 
-<!-- Floating icons -->
-<div class="icon" style="left:10%;">🩺</div>
-<div class="icon" style="left:30%;animation-delay:5s;">💉</div>
-<div class="icon" style="left:60%;animation-delay:8s;">💊</div>
-<div class="icon" style="left:80%;animation-delay:3s;">✚</div>
-
+<!-- Header -->
 <header id="mainHeader">
-<h1>Patricia S. Diaz</h1>
-<p>Registered Nurse</p>
-<button class="btn" id="showContent">View Professional Profile</button>
+  <h1>Patricia S. Diaz</h1>
+  <p>Registered Nurse</p>
+  <button class="btn" id="showContent">View My Journey</button>
+  <a href="Patricia_Diaz_CV.pdf" class="btn" id="contactBtn" download>Download CV</a>
 </header>
 
-<section>
+<!-- About -->
+<section id="about">
 <h2>About Me</h2>
-<p>Compassionate and dedicated Registered Nurse with experience in renal care and medical documentation. Passionate about delivering patient-centered healthcare with empathy, precision, and professionalism.</p>
-
+<div class="med-divider"></div>
+<p>I am a compassionate and detail-oriented Registered Nurse with experience in renal care, patient monitoring, and medical documentation. Skilled in transcription and administrative tasks. Dedicated to delivering high-quality patient care and maintaining accurate clinical records.</p>
 </section>
 
-<section>
+<!-- Professional Registration -->
+<section id="registration">
+<h2>Professional Registration</h2>
+<div class="med-divider"></div>
+<div class="license-card">
+  <div class="license-header">
+    <h3>Registered Nurse (RN)</h3>
+    <span class="status active">● Active</span>
+  </div>
+  <div class="license-details">
+    <p><strong>Registration Number:</strong> 1032488</p>
+    <p><strong>Registration Date:</strong> October 2, 2025</p>
+    <p><strong>Valid Until:</strong> June 15, 2028</p>
+  </div>
+</div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
 <h2>Experience</h2>
+<div class="med-divider"></div>
 
 <div class="card">
 <h3>Renal Nurse</h3>
-<span>RMCI Hospital Bacolod | 1 Year</span>
+<span>RIVERSIDE MEDICAL CENTER INC | 1 Year</span>
 <ul>
-<li>Provided dialysis care and monitored patients during treatment.</li>
-<li>Ensured patient safety and comfort.</li>
-<li>Collaborated with healthcare teams for quality care.</li>
+<li>Provided care for patients undergoing dialysis, monitoring vital signs and administering treatments.</li>
+<li>Maintained accurate patient records and collaborated with multidisciplinary healthcare team.</li>
 </ul>
 </div>
 
 <div class="card">
 <h3>Medical Transcriptionist</h3>
-<span>1 Year</span>
+<span>2024 - 2025</span>
 <ul>
-<li>Transcribed physician reports accurately.</li>
-<li>Maintained strict confidentiality of medical records.</li>
-<li>Reviewed documentation for completeness and accuracy.</li>
+<li>Transcribed medical records and documentation with high accuracy.</li>
+<li>Ensured compliance with confidentiality and data protection protocols.</li>
 </ul>
 </div>
+</section>
 
+<!-- Skills -->
+<section id="skills">
+<h2>Clinical Skills</h2>
+<div class="med-divider"></div>
+
+<div class="skill">
+<p>Renal Dialysis Care</p>
+<div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
+</div>
+
+<div class="skill">
+<p>Patient Monitoring</p>
+<div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+</div>
+
+<div class="skill">
+<p>Medical Documentation</p>
+<div class="skill-bar"><div class="skill-fill" data-width="88%"></div></div>
+</div>
+
+<div class="skill">
+<p>Medical Transcription</p>
+<div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
+</div>
+</section>
+
+<!-- Social Links -->
+<section id="socials">
+<h2>Connect with Me</h2>
+<div class="med-divider"></div>
+<div class="social-links">
+<a href="https://www.facebook.com/" target="_blank" class="social-btn">Facebook</a>
+<a href="https://www.instagram.com/" target="_blank" class="social-btn">Instagram</a>
+</div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
-// Loading
-window.addEventListener('load',()=>{
-  const load=document.getElementById('loadingScreen');
-  load.style.opacity='0';
-  setTimeout(()=>load.style.display='none',1000);
+// Loading screen
+window.addEventListener('load', ()=> {
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.style.opacity='0';
+  setTimeout(()=>{ loadingScreen.style.display='none'; },1000);
 });
 
-// Reveal
-document.getElementById('showContent').addEventListener('click',()=>{
-  document.getElementById('mainHeader').style.display='none';
-  document.querySelectorAll('section').forEach((sec,i)=>{
-    setTimeout(()=>sec.classList.add('visible'),i*300);
+// Show content
+const button = document.getElementById('showContent');
+const sections = document.querySelectorAll('section');
+const contactBtn = document.getElementById('contactBtn');
+const header = document.getElementById('mainHeader');
+
+button.addEventListener('click', ()=>{
+  header.classList.add('hidden');
+  sections.forEach((sec,i)=>{
+    setTimeout(()=>{ sec.classList.add('visible'); }, i*200);
   });
+  setTimeout(()=>{ contactBtn.classList.add('visible'); }, sections.length*200);
 });
 
-// Particle background pastel mix
-const canvas=document.getElementById('threeCanvas');
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
+// Particle Background
+const canvas = document.getElementById('threeCanvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,0.1,1000);
+const renderer = new THREE.WebGLRenderer({canvas,alpha:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 
-const geometry=new THREE.BufferGeometry();
-const particles=100;
-const positions=new Float32Array(particles*3);
-for(let i=0;i<particles;i++){
-  positions[i*3]=(Math.random()-0.5)*100;
-  positions[i*3+1]=(Math.random()-0.5)*100;
-  positions[i*3+2]=(Math.random()-0.5)*100;
+const particleCount=80;
+const particles=[];
+const geometry = new THREE.BufferGeometry();
+const positions = new Float32Array(particleCount*3);
+
+for(let i=0;i<particleCount;i++){
+  const x=(Math.random()-0.5)*100;
+  const y=(Math.random()-0.5)*100;
+  const z=(Math.random()-0.5)*100;
+  positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+  particles.push({pos:new THREE.Vector3(x,y,z), vel:new THREE.Vector3((Math.random()-0.5)*0.05,(Math.random()-0.5)*0.05,(Math.random()-0.5)*0.05)});
 }
-geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-const material=new THREE.PointsMaterial({color:0xff99cc,size:0.7});
-const points=new THREE.Points(geometry,material);
+geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
+const material = new THREE.PointsMaterial({color:0x4da6ff, size:0.5});
+const points = new THREE.Points(geometry, material);
 scene.add(points);
+
+// Lines
+const maxConnections=2;
+const lineGeometry = new THREE.BufferGeometry();
+const linePositions = new Float32Array(particleCount*maxConnections*3*2);
+lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions,3));
+const lineMaterial = new THREE.LineBasicMaterial({color:0x4da6ff, transparent:true, opacity:0.25});
+const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+scene.add(lines);
+
 camera.position.z=50;
+let mouseX=0, mouseY=0;
+document.addEventListener('mousemove', e=>{ mouseX=(e.clientX-window.innerWidth/2)/30; mouseY=(e.clientY-window.innerHeight/2)/30; });
 
 function animate(){
   requestAnimationFrame(animate);
-  points.rotation.y+=0.001;
+  particles.forEach((p,i)=>{
+    p.pos.add(p.vel);
+    if(p.pos.x>50||p.pos.x<-50)p.vel.x*=-1;
+    if(p.pos.y>50||p.pos.y<-50)p.vel.y*=-1;
+    if(p.pos.z>50||p.pos.z<-50)p.vel.z*=-1;
+    positions[i*3]=p.pos.x; positions[i*3+1]=p.pos.y; positions[i*3+2]=p.pos.z;
+  });
+  geometry.attributes.position.needsUpdate=true;
+  let idx=0;
+  particles.forEach((p1,i)=>{
+    for(let j=i+1;j<particles.length && j<i+1+maxConnections;j++){
+      const p2=particles[j%particles.length];
+      linePositions[idx++] = p1.pos.x; linePositions[idx++] = p1.pos.y; linePositions[idx++] = p1.pos.z;
+      linePositions[idx++] = p2.pos.x; linePositions[idx++] = p2.pos.y; linePositions[idx++] = p2.pos.z;
+    }
+  });
+  lineGeometry.attributes.position.needsUpdate=true;
+  points.rotation.x += 0.001+mouseY*0.0001;
+  points.rotation.y += 0.001+mouseX*0.0001;
+  lines.rotation.x = points.rotation.x;
+  lines.rotation.y = points.rotation.y;
   renderer.render(scene,camera);
 }
 animate();
+window.addEventListener('resize', ()=>{
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
 
 // Cursor trail
-document.addEventListener('mousemove',e=>{
-  const trail=document.createElement('div');
+document.addEventListener('mousemove', e=>{
+  const trail = document.createElement('div');
   trail.classList.add('trail');
   trail.style.left=e.clientX+'px';
   trail.style.top=e.clientY+'px';
   document.body.appendChild(trail);
   setTimeout(()=>trail.remove(),500);
 });
-</script>
 
+// Animate Skills
+function animateSkills(){
+  document.querySelectorAll('.skill-fill').forEach(bar=>{
+    bar.style.width=bar.dataset.width;
+  });
+}
+window.addEventListener('scroll',()=>{
+  const skillsSection=document.getElementById('skills');
+  const position=skillsSection.getBoundingClientRect().top;
+  if(position < window.innerHeight){
+    animateSkills();
+  }
+});
+</script>
 </body>
 </html>
-
-
