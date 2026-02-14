@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patricia S. Diaz | Registered Nurse</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Poppins',sans-serif;
+  color:#444;
+  background: linear-gradient(135deg,#ffe6f0,#e6f7ff);
+  overflow-x:hidden;
+}
+
+/* Loading Screen */
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #fff0f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2rem;
+  color: #ff66a3;
+  z-index: 1000;
+  animation: pulse 1.5s infinite;
+  transition: opacity 1s ease;
+}
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* Background Canvas */
+#threeCanvas{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:-1;
+}
+
+/* Header */
+header{
+  text-align:center;
+  padding:100px 20px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:0.5s;
+}
+header.hidden{display:none;}
+
+header h1{
+  font-family:'Quicksand',sans-serif;
+  font-size:3rem;
+  color:#ff4d94;
+}
+
+header p{
+  font-size:1.2rem;
+  margin-top:10px;
+  color:#4da6ff;
+}
+
+.btn{
+  padding:12px 28px;
+  background:#ff99cc;
+  color:#fff;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+  margin-top:20px;
+  box-shadow:0 5px 15px rgba(255,105,180,0.3);
+}
+.btn:hover{
+  background:#ff66a3;
+  transform:translateY(-3px);
+}
+
+/* Sections */
+section{
+  padding:40px 25px;
+  max-width:900px;
+  margin:40px auto;
+  background:#ffffffcc;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(255,105,180,0.2);
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.8s;
+  display:none;
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+  display:block;
+}
+
+h2{
+  margin-bottom:20px;
+  color:#ff4d94;
+  font-family:'Quicksand',sans-serif;
+}
+
+ul{list-style:none;margin-top:10px;}
+li{margin-bottom:10px;}
+
+/* Experience Cards */
+.card{
+  margin-bottom:15px;
+  padding:20px;
+  border-left:5px solid #ff99cc;
+  background:#fff;
+  border-radius:15px;
+  transition:0.3s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(255,105,180,0.2);
+}
+.card h3{
+  margin-bottom:5px;
+  color:#ff4d94;
+}
+.card span{
+  font-size:0.9rem;
+  color:#4da6ff;
+}
+
+/* Cursor trail */
+.trail{
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: #ff99cc;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.5;
+  transform: translate(-50%, -50%);
+}
+
+/* Mobile */
+@media(max-width:600px){
+  header h1{font-size:2rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="loadingScreen">Loading Nurse Portfolio...</div>
+<canvas id="threeCanvas"></canvas>
+
+<header id="mainHeader">
+  <h1>Patricia S. Diaz</h1>
+  <p>Registered Nurse</p>
+  <button class="btn" id="showContent">View My Journey 💖</button>
+</header>
+
+<section id="about">
+<h2>About Me</h2>
+<p>A compassionate and dedicated Registered Nurse with clinical experience in renal care and strong attention to detail in medical documentation. Passionate about patient-centered care, teamwork, and maintaining high standards of healthcare excellence.</p>
+</section>
+
+<section id="experience">
+<h2>Experience</h2>
+
+<div class="card">
+<h3>Renal Nurse</h3>
+<span>RMCI Hospital Bacolod | 1 Year</span>
+<ul>
+<li>Provided specialized nursing care to patients undergoing dialysis treatment.</li>
+<li>Monitored vital signs and managed patient safety during procedures.</li>
+<li>Collaborated with physicians and healthcare teams to ensure quality care.</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Medical Transcriptionist</h3>
+<span>1 Year</span>
+<ul>
+<li>Accurately transcribed medical reports and physician notes.</li>
+<li>Maintained confidentiality and ensured precise medical documentation.</li>
+<li>Reviewed records for completeness and accuracy.</li>
+</ul>
+</div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+// Keep same Three.js particle animation but soft pink color
+const canvas=document.getElementById('threeCanvas');
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+const geometry=new THREE.BufferGeometry();
+const particles=80;
+const positions=new Float32Array(particles*3);
+
+for(let i=0;i<particles;i++){
+  positions[i*3]=(Math.random()-0.5)*100;
+  positions[i*3+1]=(Math.random()-0.5)*100;
+  positions[i*3+2]=(Math.random()-0.5)*100;
+}
+geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+
+const material=new THREE.PointsMaterial({color:0xff99cc,size:0.8});
+const points=new THREE.Points(geometry,material);
+scene.add(points);
+
+camera.position.z=50;
+
+function animate(){
+  requestAnimationFrame(animate);
+  points.rotation.y+=0.001;
+  renderer.render(scene,camera);
+}
+animate();
+
+// Reveal Sections
+document.getElementById('showContent').addEventListener('click',()=>{
+  document.getElementById('mainHeader').classList.add('hidden');
+  document.querySelectorAll('section').forEach((sec,i)=>{
+    setTimeout(()=>sec.classList.add('visible'),i*200);
+  });
+});
+
+// Loading Fade
+window.addEventListener('load',()=>{
+  const loading=document.getElementById('loadingScreen');
+  loading.style.opacity='0';
+  setTimeout(()=>loading.style.display='none',1000);
+});
+
+// Cursor trail
+document.addEventListener('mousemove',e=>{
+  const trail=document.createElement('div');
+  trail.classList.add('trail');
+  trail.style.left=e.clientX+'px';
+  trail.style.top=e.clientY+'px';
+  document.body.appendChild(trail);
+  setTimeout(()=>trail.remove(),500);
+});
+</script>
+
+</body>
+</html>
