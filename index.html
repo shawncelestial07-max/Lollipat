@@ -229,7 +229,7 @@ li::before{
 <header id="mainHeader">
   <h1>Patricia S. Diaz</h1>
   <p>Registered Nurse</p>
-  <button class="btn" id="showContent">View My Journey</button>
+  <button class="btn" id="showContent">View My Journey 🩺</button>
   <a href="Patricia_Diaz_CV.pdf" class="btn" id="contactBtn" download>Download CV</a>
 </header>
 
@@ -364,79 +364,77 @@ document.addEventListener('mousemove', e=>{
   setTimeout(()=>trail.remove(),500);
 });
 
-// Three.js floating particles (pink)
+// Three.js medical emoji particles
 const canvas = document.getElementById('particleCanvas');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,0.1,1000);
 const renderer = new THREE.WebGLRenderer({canvas, alpha:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-const particleCount=80;
-const particles=[];
-const geometry = new THREE.BufferGeometry();
-const positions = new Float32Array(particleCount*3);
+camera.position.z = 50;
+
+const particleCount = 60;
+const particleShapes = ["💉","🩺","✚"];
+const spriteParticles = [];
+
+function createSprite(text){
+  const canvas = document.createElement('canvas');
+  canvas.width = 64; canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  ctx.font = '48px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, 32, 32);
+  const texture = new THREE.CanvasTexture(canvas);
+  const material = new THREE.SpriteMaterial({map: texture, transparent:true});
+  return new THREE.Sprite(material);
+}
 
 for(let i=0;i<particleCount;i++){
-  const x=(Math.random()-0.5)*100;
-  const y=(Math.random()-0.5)*100;
-  const z=(Math.random()-0.5)*100;
-  positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
-  particles.push({pos:new THREE.Vector3(x,y,z), vel:new THREE.Vector3((Math.random()-0.5)*0.05,(Math.random()-0.5)*0.05,(Math.random()-0.5)*0.05)});
+  const shape = particleShapes[Math.floor(Math.random()*particleShapes.length)];
+  const sprite = createSprite(shape);
+  sprite.position.set(
+    (Math.random()-0.5)*100,
+    (Math.random()-0.5)*100,
+    (Math.random()-0.5)*100
+  );
+  sprite.scale.set(3,3,1);
+  sprite.userData = {
+    vel: new THREE.Vector3(
+      (Math.random()-0.5)*0.05,
+      (Math.random()-0.5)*0.05,
+      (Math.random()-0.5)*0.05
+    )
+  };
+  scene.add(sprite);
+  spriteParticles.push(sprite);
 }
-geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
-const material = new THREE.PointsMaterial({color:0xff69b4, size:0.7});
-const points = new THREE.Points(geometry, material);
-scene.add(points);
 
-// Lines
-const maxConnections=2;
-const lineGeometry = new THREE.BufferGeometry();
-const linePositions = new Float32Array(particleCount*maxConnections*3*2);
-lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions,3));
-const lineMaterial = new THREE.LineBasicMaterial({color:0xff69b4, transparent:true, opacity:0.25});
-const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-scene.add(lines);
-
-camera.position.z=50;
-
-let mouseX=0, mouseY=0;
-document.addEventListener('mousemove', e=>{ mouseX=(e.clientX-window.innerWidth/2)/30; mouseY=(e.clientY-window.innerHeight/2)/30; });
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', e=>{
+  mouseX = (e.clientX-window.innerWidth/2)/30;
+  mouseY = (e.clientY-window.innerHeight/2)/30;
+});
 
 function animate(){
   requestAnimationFrame(animate);
-
-  particles.forEach((p,i)=>{
-    p.pos.add(p.vel);
-    if(p.pos.x>50||p.pos.x<-50)p.vel.x*=-1;
-    if(p.pos.y>50||p.pos.y<-50)p.vel.y*=-1;
-    if(p.pos.z>50||p.pos.z<-50)p.vel.z*=-1;
-    positions[i*3]=p.pos.x; positions[i*3+1]=p.pos.y; positions[i*3+2]=p.pos.z;
+  spriteParticles.forEach(p=>{
+    p.position.add(p.userData.vel);
+    ['x','y','z'].forEach(axis=>{
+      if(p.position[axis] > 50 || p.position[axis] < -50) p.userData.vel[axis]*=-1;
+    });
+    p.rotation.z += 0.01;
   });
-  geometry.attributes.position.needsUpdate=true;
-
-  let idx=0;
-  particles.forEach((p1,i)=>{
-    for(let j=i+1;j<particles.length && j<i+1+maxConnections;j++){
-      const p2=particles[j%particles.length];
-      linePositions[idx++] = p1.pos.x; linePositions[idx++] = p1.pos.y; linePositions[idx++] = p1.pos.z;
-      linePositions[idx++] = p2.pos.x; linePositions[idx++] = p2.pos.y; linePositions[idx++] = p2.pos.z;
-    }
-  });
-  lineGeometry.attributes.position.needsUpdate=true;
-
-  points.rotation.x += 0.001+mouseY*0.0001;
-  points.rotation.y += 0.001+mouseX*0.0001;
-  lines.rotation.x = points.rotation.x;
-  lines.rotation.y = points.rotation.y;
-
-  renderer.render(scene,camera);
+  scene.rotation.x = mouseY*0.002;
+  scene.rotation.y = mouseX*0.002;
+  renderer.render(scene, camera);
 }
 animate();
 
 window.addEventListener('resize', ()=>{
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </script>
 </body>
