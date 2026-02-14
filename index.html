@@ -16,6 +16,7 @@ body{
   color:#333;
   background:#fff0f5;
   overflow-x:hidden;
+  position:relative;
 }
 
 /* Loading Screen */
@@ -41,6 +42,19 @@ body{
   100% { opacity: 0.3; }
 }
 
+/* Floating Medical Icons Background */
+.med-icon{
+  position:absolute;
+  width:40px;
+  height:40px;
+  opacity:0.3;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-50px);}
+}
+
 /* HEADER */
 header{
   text-align:center;
@@ -49,6 +63,8 @@ header{
   display:flex; flex-direction:column;
   justify-content:center; align-items:center;
   transition:0.5s;
+  position:relative;
+  z-index:1;
 }
 header.hidden{display:none;}
 header h1{
@@ -89,6 +105,8 @@ section{
   transform:translateY(40px);
   transition:0.8s;
   display:none;
+  position:relative;
+  z-index:1;
 }
 section.visible{opacity:1;transform:translateY(0);display:block;}
 h2{margin-bottom:20px;color:#ff69b4;font-family:'Orbitron',sans-serif;}
@@ -199,6 +217,13 @@ li{margin-bottom:10px;}
 
 <!-- Loading Screen -->
 <div id="loadingScreen">Loading Portfolio...</div>
+
+<!-- Floating medical icons -->
+<img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" class="med-icon" style="left:10%;animation-duration:15s;">
+<img src="https://cdn-icons-png.flaticon.com/512/3039/3039827.png" class="med-icon" style="left:30%;animation-duration:12s;">
+<img src="https://cdn-icons-png.flaticon.com/512/2950/2950614.png" class="med-icon" style="left:50%;animation-duration:18s;">
+<img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" class="med-icon" style="left:70%;animation-duration:14s;">
+<img src="https://cdn-icons-png.flaticon.com/512/3039/3039827.png" class="med-icon" style="left:90%;animation-duration:16s;">
 
 <!-- Header -->
 <header id="mainHeader">
