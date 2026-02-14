@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Patricia S. Diaz | Registered Nurse</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -13,33 +13,46 @@ html{scroll-behavior:smooth;}
 body{
   font-family:'Poppins',sans-serif;
   color:#444;
-  background: linear-gradient(135deg,#ffe6f0,#e6f7ff);
   overflow-x:hidden;
+  background: linear-gradient(-45deg,#ffe6f2,#e6f7ff,#fff0f5,#e0f7fa);
+  background-size:400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
-/* Loading Screen */
-#loadingScreen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #fff0f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 2rem;
-  color: #ff66a3;
-  z-index: 1000;
-  animation: pulse 1.5s infinite;
-  transition: opacity 1s ease;
+/* Loading */
+#loadingScreen{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:#fff;
+  display:flex;justify-content:center;align-items:center;
+  font-size:2rem;color:#ff69b4;
+  z-index:1000;
+  animation:pulse 1.5s infinite;
+  transition:1s;
 }
-@keyframes pulse {
-  0% { opacity: 0.4; }
-  50% { opacity: 1; }
-  100% { opacity: 0.4; }
+@keyframes pulse{
+  0%{opacity:0.4;}
+  50%{opacity:1;}
+  100%{opacity:0.4;}
 }
 
-/* Background Canvas */
+/* Floating Medical Icons */
+.icon{
+  position:fixed;
+  font-size:22px;
+  opacity:0.15;
+  animation:floatIcon 20s linear infinite;
+}
+@keyframes floatIcon{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* Canvas */
 #threeCanvas{
   position:fixed;
   top:0;left:0;
@@ -49,59 +62,63 @@ body{
 
 /* Header */
 header{
-  text-align:center;
-  padding:100px 20px;
   min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  transition:0.5s;
+  text-align:center;
+  animation:floatHeader 4s ease-in-out infinite;
 }
-header.hidden{display:none;}
+@keyframes floatHeader{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
 
 header h1{
   font-family:'Quicksand',sans-serif;
   font-size:3rem;
-  color:#ff4d94;
+  color:#ff4da6;
 }
 
 header p{
-  font-size:1.2rem;
-  margin-top:10px;
   color:#4da6ff;
+  margin-top:10px;
+  font-size:1.2rem;
 }
 
 .btn{
-  padding:12px 28px;
-  background:#ff99cc;
-  color:#fff;
-  border:none;
+  margin-top:25px;
+  padding:14px 35px;
   border-radius:30px;
+  border:none;
   cursor:pointer;
   font-weight:600;
-  transition:0.3s;
-  margin-top:20px;
-  box-shadow:0 5px 15px rgba(255,105,180,0.3);
+  background:linear-gradient(45deg,#ff99cc,#66ccff);
+  color:white;
+  box-shadow:0 5px 20px rgba(255,105,180,0.4);
+  transition:0.4s;
 }
 .btn:hover{
-  background:#ff66a3;
-  transform:translateY(-3px);
+  transform:translateY(-4px) scale(1.05);
+  box-shadow:0 10px 30px rgba(255,105,180,0.6);
 }
 
 /* Sections */
 section{
-  padding:40px 25px;
   max-width:900px;
-  margin:40px auto;
-  background:#ffffffcc;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(255,105,180,0.2);
+  margin:50px auto;
+  padding:40px;
+  border-radius:25px;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.7);
+  box-shadow:0 8px 32px rgba(255,105,180,0.2);
   opacity:0;
-  transform:translateY(40px);
-  transition:0.8s;
+  transform:translateY(50px);
+  transition:1s;
   display:none;
 }
+
 section.visible{
   opacity:1;
   transform:translateY(0);
@@ -110,80 +127,91 @@ section.visible{
 
 h2{
   margin-bottom:20px;
-  color:#ff4d94;
   font-family:'Quicksand',sans-serif;
+  color:#ff4da6;
 }
 
-ul{list-style:none;margin-top:10px;}
-li{margin-bottom:10px;}
-
-/* Experience Cards */
+/* Cards */
 .card{
-  margin-bottom:15px;
+  background:white;
   padding:20px;
-  border-left:5px solid #ff99cc;
-  background:#fff;
-  border-radius:15px;
-  transition:0.3s;
-  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+  transition:0.4s;
 }
 .card:hover{
   transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(255,105,180,0.2);
+  box-shadow:0 12px 25px rgba(255,105,180,0.3);
 }
-.card h3{
-  margin-bottom:5px;
-  color:#ff4d94;
+.card h3{color:#ff4da6;}
+.card span{color:#4da6ff;font-size:0.9rem;}
+
+/* Heartbeat Line */
+.heartbeat{
+  width:100%;
+  height:60px;
+  background: url('https://i.imgur.com/9a6h6Yp.png') repeat-x;
+  background-size:contain;
+  animation:moveHeart 5s linear infinite;
+  opacity:0.3;
 }
-.card span{
-  font-size:0.9rem;
-  color:#4da6ff;
+@keyframes moveHeart{
+  from{background-position-x:0;}
+  to{background-position-x:1000px;}
 }
 
 /* Cursor trail */
 .trail{
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: #ff99cc;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.5;
-  transform: translate(-50%, -50%);
+  position:fixed;
+  width:8px;height:8px;
+  background:#ff99cc;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0.6;
+  transform:translate(-50%,-50%);
 }
 
-/* Mobile */
+/* Responsive */
 @media(max-width:600px){
   header h1{font-size:2rem;}
+  section{padding:25px;}
 }
 </style>
 </head>
 <body>
 
-<div id="loadingScreen">Loading Nurse Portfolio...</div>
+<div id="loadingScreen">Preparing Nurse Portfolio...</div>
 <canvas id="threeCanvas"></canvas>
 
+<!-- Floating icons -->
+<div class="icon" style="left:10%;">🩺</div>
+<div class="icon" style="left:30%;animation-delay:5s;">💉</div>
+<div class="icon" style="left:60%;animation-delay:8s;">💊</div>
+<div class="icon" style="left:80%;animation-delay:3s;">✚</div>
+
 <header id="mainHeader">
-  <h1>Patricia S. Diaz</h1>
-  <p>Registered Nurse</p>
-  <button class="btn" id="showContent">View My Journey 💖</button>
+<h1>Patricia S. Diaz</h1>
+<p>Registered Nurse</p>
+<button class="btn" id="showContent">View My Journey 💖</button>
 </header>
 
-<section id="about">
+<section>
 <h2>About Me</h2>
-<p>A compassionate and dedicated Registered Nurse with clinical experience in renal care and strong attention to detail in medical documentation. Passionate about patient-centered care, teamwork, and maintaining high standards of healthcare excellence.</p>
+<p>Compassionate and dedicated Registered Nurse with experience in renal care and medical documentation. Passionate about delivering patient-centered healthcare with empathy, precision, and professionalism.</p>
+<div class="heartbeat"></div>
 </section>
 
-<section id="experience">
+<section>
 <h2>Experience</h2>
 
 <div class="card">
 <h3>Renal Nurse</h3>
 <span>RMCI Hospital Bacolod | 1 Year</span>
 <ul>
-<li>Provided specialized nursing care to patients undergoing dialysis treatment.</li>
-<li>Monitored vital signs and managed patient safety during procedures.</li>
-<li>Collaborated with physicians and healthcare teams to ensure quality care.</li>
+<li>Provided dialysis care and monitored patients during treatment.</li>
+<li>Ensured patient safety and comfort.</li>
+<li>Collaborated with healthcare teams for quality care.</li>
 </ul>
 </div>
 
@@ -191,9 +219,9 @@ li{margin-bottom:10px;}
 <h3>Medical Transcriptionist</h3>
 <span>1 Year</span>
 <ul>
-<li>Accurately transcribed medical reports and physician notes.</li>
-<li>Maintained confidentiality and ensured precise medical documentation.</li>
-<li>Reviewed records for completeness and accuracy.</li>
+<li>Transcribed physician reports accurately.</li>
+<li>Maintained strict confidentiality of medical records.</li>
+<li>Reviewed documentation for completeness and accuracy.</li>
 </ul>
 </div>
 
@@ -201,7 +229,22 @@ li{margin-bottom:10px;}
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
-// Keep same Three.js particle animation but soft pink color
+// Loading
+window.addEventListener('load',()=>{
+  const load=document.getElementById('loadingScreen');
+  load.style.opacity='0';
+  setTimeout(()=>load.style.display='none',1000);
+});
+
+// Reveal
+document.getElementById('showContent').addEventListener('click',()=>{
+  document.getElementById('mainHeader').style.display='none';
+  document.querySelectorAll('section').forEach((sec,i)=>{
+    setTimeout(()=>sec.classList.add('visible'),i*300);
+  });
+});
+
+// Particle background pastel mix
 const canvas=document.getElementById('threeCanvas');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
@@ -209,20 +252,17 @@ const renderer=new THREE.WebGLRenderer({canvas,alpha:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 
 const geometry=new THREE.BufferGeometry();
-const particles=80;
+const particles=100;
 const positions=new Float32Array(particles*3);
-
 for(let i=0;i<particles;i++){
   positions[i*3]=(Math.random()-0.5)*100;
   positions[i*3+1]=(Math.random()-0.5)*100;
   positions[i*3+2]=(Math.random()-0.5)*100;
 }
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-
-const material=new THREE.PointsMaterial({color:0xff99cc,size:0.8});
+const material=new THREE.PointsMaterial({color:0xff99cc,size:0.7});
 const points=new THREE.Points(geometry,material);
 scene.add(points);
-
 camera.position.z=50;
 
 function animate(){
@@ -231,21 +271,6 @@ function animate(){
   renderer.render(scene,camera);
 }
 animate();
-
-// Reveal Sections
-document.getElementById('showContent').addEventListener('click',()=>{
-  document.getElementById('mainHeader').classList.add('hidden');
-  document.querySelectorAll('section').forEach((sec,i)=>{
-    setTimeout(()=>sec.classList.add('visible'),i*200);
-  });
-});
-
-// Loading Fade
-window.addEventListener('load',()=>{
-  const loading=document.getElementById('loadingScreen');
-  loading.style.opacity='0';
-  setTimeout(()=>loading.style.display='none',1000);
-});
 
 // Cursor trail
 document.addEventListener('mousemove',e=>{
