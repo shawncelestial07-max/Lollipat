@@ -229,7 +229,7 @@ li::before{
 <header id="mainHeader">
   <h1>Patricia S. Diaz</h1>
   <p>Registered Nurse</p>
-  <button class="btn" id="showContent">View My Journey 🩺</button>
+  <button class="btn" id="showContent">View My Journey</button>
   <a href="Patricia_Diaz_CV.pdf" class="btn" id="contactBtn" download>Download CV</a>
 </header>
 
@@ -377,14 +377,18 @@ const particleCount = 60;
 const particleShapes = ["💉","🩺","✚"];
 const spriteParticles = [];
 
+// Pink cross emoji
 function createSprite(text){
   const canvas = document.createElement('canvas');
   canvas.width = 64; canvas.height = 64;
   const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = "#ff69b4"; // pink for all emojis
   ctx.font = '48px serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(text, 32, 32);
+
   const texture = new THREE.CanvasTexture(canvas);
   const material = new THREE.SpriteMaterial({map: texture, transparent:true});
   return new THREE.Sprite(material);
